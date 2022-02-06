@@ -1,0 +1,29 @@
+import { Decorators } from '../decorators/decorators';
+import { CreateItemModel } from '../../core/models/create-item.model';
+import { CreateItemProtocol } from '../../core/protocols/create-item.protocol';
+import { PrismaConnector } from './prisma.connector';
+
+@Decorators.Inject()
+export class CreateItemConnector implements CreateItemProtocol {
+  constructor(private readonly prismaConnector: PrismaConnector) {}
+
+  async call(data: CreateItemModel): Promise<CreateItemModel> {
+    const item = await this.prismaConnector.item.create({
+      data: {
+        name: data.name,
+        price: data.price,
+      },
+      select: {
+        pk: true,
+        name: true,
+        price: true,
+      },
+    });
+
+    return new CreateItemModel({
+      pk: item.pk,
+      name: item.name,
+      price: Number(item.price),
+    });
+  }
+}

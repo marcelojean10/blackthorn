@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  gen-sonar:
+    image: sonarqube:8.2-community
+    container_name: sonar-blackthorn
+    ports:
+      - "9001:9000"
+      - "9092:9092"
+  postgres:
+    container_name: postgres-bl
+    image: postgres:14-alpine3.15
+    networks:
+      - webnet
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "4040:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+networks:
+  webnet:
+volumes:
+  pgdata:
