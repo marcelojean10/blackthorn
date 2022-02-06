@@ -7,6 +7,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { PrismaConnector } from '../src/adapter/connectors/prisma.connector';
 import { AppModule } from './infra/nestjs/modules/app.module';
 import { fastifyInstance } from './infra/utils/add-hook-on-request';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 function createNestApp(): Promise<NestFastifyApplication> {
   const fastifyAdapter = new FastifyAdapter();
@@ -42,11 +43,23 @@ async function setupPrismaConnection(
   await prismaService.enableShutdownHooks(app);
 }
 
+function setupSwagger(app: NestFastifyApplication): void {
+  const config = new DocumentBuilder()
+        .setTitle('Blackthron API')
+        .setDescription('Assessment')
+        .setVersion('1.0')
+        .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+}
+
 async function bootstrap({ host, port }: BoostrapConfigObject) {
   const app = await createNestApp();
   app.enableCors();
   setupGlobalPipes(app);
 
+  setupSwagger(app)
   await app.listen(port, host);
   setupHotStartAndReload(app);
   await setupPrismaConnection(app);

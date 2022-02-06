@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateItemInputType {
+export class RemoveItemCartInputType {
   @ApiProperty()
-  name: string;
-  
+  id: string;
+
   @ApiProperty()
-  price: number;
+  itemId: string;
 }
