@@ -13,7 +13,7 @@ describe('CreateCart Test', () => {
     taxes: 0.2,
     total: 100,
     item: new CreateItemModel({
-      pk: 'any_pk',
+      id: 'any_id',
       name: 'any_name',
       price: Number(17.5),
     }),

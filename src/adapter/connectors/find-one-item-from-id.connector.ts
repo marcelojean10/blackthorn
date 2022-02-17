@@ -10,7 +10,7 @@ export class FindOneItemFromIdConnector implements FindOneItemFromIdProtocol {
   async call(id: string): Promise<CreateItemModel> {
     const founded = await this.prismaConnector.item.findUnique({
       where: {
-        pk: id,
+        id,
       },
     });
 
@@ -19,7 +19,7 @@ export class FindOneItemFromIdConnector implements FindOneItemFromIdProtocol {
     }
 
     return new CreateItemModel({
-      pk: founded.pk,
+      id: founded.id,
       name: founded.name,
       price: Number(founded.price),
     });

@@ -3,6 +3,7 @@ import { CreateCartModel } from 'src/core/models/create-cart.model';
 import { AddItemCartStrategy } from 'src/core/strategies/add-item-cart.strategy';
 import { CreateCartStrategy } from 'src/core/strategies/create-cart.strategy';
 import { GetAllCartItemsStrategy } from 'src/core/strategies/get-all-cart-items.strategy';
+import { GetCartByUserIdStrategy } from 'src/core/strategies/get-cart-by-user-id.strategy';
 import { RemoveItemCartStrategy } from 'src/core/strategies/remove-item-cart.strategy';
 import { CreateCartInputType } from 'src/infra/nestjs/http/rest/dtos/cart/inputs/create-cart.input-type';
 
@@ -13,6 +14,7 @@ export class CartService {
     private readonly getAllCartItemsStrategy: GetAllCartItemsStrategy,
     private readonly removeItemCartStrategy: RemoveItemCartStrategy,
     private readonly addItemCartStrategy: AddItemCartStrategy,
+    private readonly getCartByUserStrategy: GetCartByUserIdStrategy,
   ) {}
 
   async get(): Promise<CreateCartModel[]> {
@@ -27,7 +29,8 @@ export class CartService {
         subtotal: cart.subtotal,
         taxes: cart.taxes,
         total: cart.total,
-        itemPk: cart.itemPk,
+        itemId: cart.itemId,
+        userId: cart.userId,
       }),
     );
 
@@ -43,4 +46,10 @@ export class CartService {
     const created = await this.addItemCartStrategy.call(id, itemId);
     return created;
   }
+
+  async getCartByUser(userId: string): Promise<void> {
+    const cart = await this.getCartByUserStrategy.call(userId)
+    return cart
+  }
+
 }

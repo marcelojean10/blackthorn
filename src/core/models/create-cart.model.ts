@@ -1,18 +1,21 @@
 import { Decimal } from '@prisma/client/runtime';
 import { CreateItemModel } from './create-item.model';
+import { CreateSystemUserModel } from './system-user/create-system-user.model';
 
 export type CreateCartModelBuild = {
-  pk?: string;
+  id?: string;
   subtotal: Decimal | number | string;
   discounts: Decimal | number | string;
   taxes: Decimal | number | string;
   total: Decimal | number | string;
-  itemPk?: string;
+  itemId?: string;
   item?: CreateItemModel;
+  userId?: string;
+  user?: CreateSystemUserModel;
 };
 
 export class CreateCartModel {
-  public readonly pk?: string;
+  public readonly id?: string;
 
   public readonly subtotal!: number;
 
@@ -24,9 +27,14 @@ export class CreateCartModel {
 
   public readonly total!: number;
 
-  public readonly itemPk?: string;
+  public readonly itemId?: string;
 
   public readonly item?: CreateItemModel;
+
+  public readonly userId?: string;
+
+  public readonly user!: CreateSystemUserModel;
+
 
   constructor(builder: CreateCartModelBuild) {
     Object.assign(this, builder);
@@ -42,13 +50,15 @@ export class CreateCartModel {
 
   copyWith(other: CreateCartModelBuild): CreateCartModel {
     return new CreateCartModel({
-      pk: other.pk ?? this.pk,
+      id: other.id ?? this.id,
       discounts: other.discounts ?? this.discounts,
       subtotal: other.subtotal ?? this.subtotal,
       taxes: other.taxes ?? this.taxes,
       total: other.total ?? this.total,
-      itemPk: other.itemPk ?? this.itemPk,
+      itemId: other.itemId ?? this.itemId,
       item: other.item ?? this.item,
+      userId: other.userId ?? this.userId,
+      user: other.user ?? this.user,
     });
   }
 }

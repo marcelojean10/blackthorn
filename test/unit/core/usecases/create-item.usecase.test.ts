@@ -7,7 +7,7 @@ import { CreateItemStrategy } from '../../../../src/core/strategies/create-item.
 describe('CreateCart Test', () => {
   let createItemStrategy: CreateItemStrategy;
   const itemMock: CreateItemModel = new CreateItemModel({
-    pk: 'any_pk',
+    id: 'any_id',
     name: 'any_name',
     price: Number(17.5),
   });

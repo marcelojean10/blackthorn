@@ -8,12 +8,12 @@ describe('GetAllItems Test', () => {
   let getAllItemsStrategy: GetAllItemsStrategy;
   const itemsMock: CreateItemModel[] = [
     new CreateItemModel({
-      pk: 'any_pk',
+      id: 'any_id',
       name: 'any_name',
       price: Number(17.5),
     }),
     new CreateItemModel({
-      pk: 'any_pk_2',
+      id: 'any_id',
       name: 'any_name_2',
       price: Number(1.5),
     }),

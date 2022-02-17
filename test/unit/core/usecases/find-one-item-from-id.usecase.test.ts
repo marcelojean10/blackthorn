@@ -7,7 +7,7 @@ import { FindOneItemFromIdStrategy } from '../../../../src/core/strategies/find-
 describe('FindOneItemFromId Test', () => {
   let findItemFromId: FindOneItemFromIdStrategy;
   const itemMock: CreateItemModel = new CreateItemModel({
-    pk: 'any_pk',
+    id: 'any_id',
     name: 'any_name',
     price: Number(17.5),
   });
@@ -31,7 +31,7 @@ describe('FindOneItemFromId Test', () => {
   });
 
   it('Should be possible find item by id', async () => {
-    const item = await findItemFromId.call('any_pk');
+    const item = await findItemFromId.call('any_id');
 
     expect(item).toEqual(itemMock);
   });

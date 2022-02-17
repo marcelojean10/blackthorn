@@ -14,14 +14,14 @@ export class CreateItemConnector implements CreateItemProtocol {
         price: data.price,
       },
       select: {
-        pk: true,
+        id: true,
         name: true,
         price: true,
       },
     });
 
     return new CreateItemModel({
-      pk: item.pk,
+      id: item.id,
       name: item.name,
       price: Number(item.price),
     });

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiParam } from '@nestjs/swagger';
 import { CreateCartModel } from 'src/core/models/create-cart.model';
 import { CartService } from '../../../../adapter/services/cart.service';
@@ -42,5 +42,10 @@ export class CartController {
   ): Promise<boolean> {
     const result = this.cartService.removeItemCart(data.id, data.itemId);
     return result;
+  }
+
+  @Get('/by-user/:userId')
+  cartByUserId(@Param('userId') userId: string) {
+    return this.cartService.getCartByUser(userId);
   }
 }

@@ -4,6 +4,7 @@ import { CartController } from '../../http/rest/cart.controller';
 import { AddItemCartFeatureModule } from './add-item-cart.module';
 import { CreateCartFeatureModule } from './create-cart.module';
 import { GetAllCartItemsFeatureModule } from './get-all-cart-items.module';
+import { GetCartByUserIdFeatureModule } from './get-cart-by-user-id.module';
 import { RemoveItemCartFeatureModule } from './remove-item-cart.module';
 
 @Module({
@@ -12,6 +13,7 @@ import { RemoveItemCartFeatureModule } from './remove-item-cart.module';
     GetAllCartItemsFeatureModule,
     RemoveItemCartFeatureModule,
     AddItemCartFeatureModule,
+    GetCartByUserIdFeatureModule
   ],
   providers: [CartService],
   controllers: [CartController],

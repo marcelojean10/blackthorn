@@ -7,33 +7,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Cart {
-  pk        String  @id @default(uuid())
-  subtotal  Decimal
-  discounts Decimal
-  taxes     Decimal
-  total     Decimal
+model AuthCredentials {
+  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  login    String @unique @db.VarChar(180)
+  password String @db.VarChar(180)
+  user_id  String @db.Uuid
+  users    Users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  CartItems CartItems[]
+  @@map("auth_credentials")
+}
+
+model Cart {
+  id         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  subtotal   Decimal     @db.Decimal
+  discounts  Decimal     @db.Decimal
+  taxes      Decimal     @db.Decimal
+  total      Decimal     @db.Decimal
+  user_id    String      @db.Uuid
+  users      Users       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cart_items CartItems[]
+
   @@map("cart")
 }
 
-model Item {
-  pk    String  @id @default(uuid())
-  name  String
-  price Decimal
+model CartItems {
+  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  cart_id String @db.Uuid
+  item_id String @db.Uuid
+  cart    Cart   @relation(fields: [cart_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  item    Item   @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  CartItems CartItems[]
+  @@map("cart_items")
+}
+
+model Item {
+  id         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name       String      @db.VarChar
+  price      Decimal     @db.Decimal
+  cart_items CartItems[]
+
   @@map("item")
 }
 
-model CartItems {
-  pk String @id @default(uuid())
+model Users {
+  id               String            @id(map: "users_id_key") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name             String            @db.VarChar(100)
+  auth_credentials AuthCredentials[]
+  cart             Cart[]
 
-  cartPk String
-  itemPk String
-
-  cart Cart[] @relation(fields: [cartPk], references: [pk])
-  item Item   @relation(fields: [itemPk], references: [pk])
-  @@map("cart_items")
+  @@map("users")
 }

@@ -14,25 +14,31 @@ export class CreateCartConnector implements CreateCartProtocol {
         subtotal: data.subtotal,
         taxes: data.taxes,
         total: data.total,
+        user_id: data.userId,
       },
       select: {
-        pk: true,
+        id: true,
         discounts: true,
         subtotal: true,
         taxes: true,
         total: true,
+        user_id: true
       },
     });
 
-    await this.prismaConnector.cartItems.create({
+    const cartItems = await this.prismaConnector.cartItems.create({
       data: {
-        itemPk: data.itemPk,
-        cartPk: cart.pk,
+        item_id: data.itemId,
+        cart_id: cart.id,
       },
+      include: {
+        item: true
+      }
     });
 
+    console.log(cartItems)
     return new CreateCartModel({
-      pk: cart.pk,
+      id: cart.id,
       discounts: Number(cart.discounts),
       subtotal: Number(cart.subtotal),
       taxes: Number(cart.taxes),

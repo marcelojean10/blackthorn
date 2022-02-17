@@ -8,9 +8,9 @@ describe('GetAllCartItems Test', () => {
   let getAllCartItemsStrategy: GetAllCartItemsStrategy;
   const cartItemsMock: CartItems[] = [
     {
-      pk: 'any_pk',
-      cartPk: 'any_pk',
-      itemPk: 'any_pk',
+      id: 'any_id',
+      cart_id: 'any_id',
+      item_id: 'any_id',
     },
   ];
 

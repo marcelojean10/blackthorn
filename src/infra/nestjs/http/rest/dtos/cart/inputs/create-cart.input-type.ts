@@ -14,5 +14,8 @@ export class CreateCartInputType {
   total: number;
 
   @ApiProperty()
-  itemPk: string;
+  itemId: string;
+
+  @ApiProperty()
+  userId: string;
 }

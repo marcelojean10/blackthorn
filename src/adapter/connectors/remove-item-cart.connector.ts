@@ -12,7 +12,7 @@ export class RemoveItemCartConnector implements RemoveItemCartProtocol {
     const deleteCartItem = await this.prismaConnector.$queryRaw(
       Prisma.sql`
       delete from public.cart_items ci
-      where ci."cartPk" = ${id} and ci."itemPk" = ${itemId}`,
+      where ci.cart_id = ${id} and ci.item_id = ${itemId}`,
     );
 
     if (!deleteCartItem) {

@@ -9,8 +9,8 @@ export class AddItemCartConnector implements AddItemCartProtocol {
   async call(id: string, itemId: string): Promise<boolean> {
     const addedCartItem = await this.prismaConnector.cartItems.create({
       data: {
-        cartPk: id,
-        itemPk: itemId,
+        cart_id: id,
+        item_id: itemId,
       },
     });
 

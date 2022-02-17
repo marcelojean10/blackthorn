@@ -1,11 +1,11 @@
 export type CreateItemModelBuild = {
-  pk?: string;
+  id?: string
   name: string;
   price: number;
 };
 
 export class CreateItemModel {
-  public readonly pk?: string;
+  public readonly id?: string
 
   public readonly name!: string;
 
@@ -25,7 +25,7 @@ export class CreateItemModel {
 
   copyWith(other: CreateItemModelBuild): CreateItemModel {
     return new CreateItemModel({
-      pk: other.pk ?? this.pk,
+      id: other.id ?? this.id,
       name: other.name ?? this.name,
       price: other.price ?? this.price,
     });
